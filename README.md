@@ -12,7 +12,7 @@ It shows how to remove a model's property from the automatic model binding in a 
 
 ### Option 1: Github Classroom
 
-If your instructor choose to use Github Classroom, you will all be given an invitation link.
+If your instructor chooses to use Github Classroom, you will all be given an invitation link.
 
 1. The chosen person will click the link and create the team.
 2. On that process is complete and the repository is created, everyone else joins their team.
