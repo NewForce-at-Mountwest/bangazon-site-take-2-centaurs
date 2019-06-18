@@ -17,7 +17,6 @@ namespace Bangazon.Controllers
     public class PaymentTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         private readonly UserManager<ApplicationUser> _userManager;
 
         public PaymentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
@@ -29,14 +28,14 @@ namespace Bangazon.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        [Authorize]
         // GET: PaymentTypes
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var currentUser = await GetCurrentUserAsync();
 
             var applicationDbContext = _context.PaymentType
-            .Include(p => p.ApplicationUser)
+            .Include(p => p.User)
             .Where(p => p.UserId == currentUser.Id)
             .Where(p => p.IsActive == true);
 
@@ -59,7 +58,7 @@ namespace Bangazon.Controllers
             }
 
             var paymentType = await _context.PaymentType
-                .Include(p => p.ApplicationUser)
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PaymentTypeId == id);
             if (paymentType == null)
             {
@@ -73,7 +72,7 @@ namespace Bangazon.Controllers
         // GET: PaymentTypes/Create
         public IActionResult Create()
         {
-            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -83,7 +82,7 @@ namespace Bangazon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentTypeId,DateCreated,Description,AccountNumber,ApplicationUserId")] PaymentType paymentType)
+        public async Task<IActionResult> Create([Bind("PaymentTypeId,DateCreated,Description,AccountNumber,UserId")] PaymentType paymentType)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +90,7 @@ namespace Bangazon.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", paymentType.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", paymentType.UserId);
             return View(paymentType);
         }
 
@@ -109,7 +108,7 @@ namespace Bangazon.Controllers
             {
                 return NotFound();
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", paymentType.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", paymentType.UserId);
             return View(paymentType);
         }
 
@@ -119,7 +118,7 @@ namespace Bangazon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentTypeId,DateCreated,Description,AccountNumber,ApplicationUserId")] PaymentType paymentType)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentTypeId,DateCreated,Description,AccountNumber,UserId")] PaymentType paymentType)
         {
             if (id != paymentType.PaymentTypeId)
             {
@@ -146,7 +145,7 @@ namespace Bangazon.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", paymentType.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", paymentType.UserId);
             return View(paymentType);
         }
 
@@ -160,7 +159,7 @@ namespace Bangazon.Controllers
             }
 
             var paymentType = await _context.PaymentType
-                .Include(p => p.ApplicationUser)
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PaymentTypeId == id);
             if (paymentType == null)
             {

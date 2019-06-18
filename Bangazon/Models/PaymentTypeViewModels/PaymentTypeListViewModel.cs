@@ -9,6 +9,7 @@ namespace Bangazon.Models.PaymentTypeViewModels
     {
         public List<PaymentType> PaymentTypes { get; set; }
 
+
         public PaymentTypeListViewModel()
         {
 
