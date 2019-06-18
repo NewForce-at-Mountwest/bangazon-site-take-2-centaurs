@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bangazon.Models.OrderViewModels
 {
-    public class OrderDetailViewModel
+    public class OrderPaymentViewModel
     {
         public Order Order { get; set; }
 
