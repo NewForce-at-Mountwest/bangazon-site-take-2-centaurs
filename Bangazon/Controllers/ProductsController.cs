@@ -62,17 +62,12 @@ namespace Bangazon.Controllers
         [Authorize]
         public IActionResult Create()
         {
-
             ProductViewModel productModel = new ProductViewModel();
 
             SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
 
-
-
             productModel.productTypes = productTypes;
             return View(productModel);
-
-
         }
 
         // POST: Products/Create
