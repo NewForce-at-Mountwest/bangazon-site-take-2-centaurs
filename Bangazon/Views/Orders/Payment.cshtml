@@ -36,8 +36,8 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
             <div class="form-group">
-                <label asp-for="Order.PaymentTypeId" class="control-label"></label>
-                <select asp-for="Order.PaymentTypeId" class="form-control" asp-items="@Model.UserPaymentTypes"></select>
+                <label asp-for="UserPaymentTypes" class="control-label"></label>
+                <select asp-for="UserPaymentTypes" class="form-control" asp-items="@Model.UserPaymentTypes"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />

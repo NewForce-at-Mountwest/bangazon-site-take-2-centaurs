@@ -59,15 +59,10 @@ namespace Bangazon.Controllers
 
         // GET: Orders/Create
         [Authorize]
-        public async Task<IActionResult> Create(int id)
+        public async Task<IActionResult> Create()
         {
-
-            ApplicationUser user = await GetCurrentUserAsync();
-            var viewModel = new OrderDetailViewModel();
-            viewModel.Order = await _context.Order.FindAsync(id);
-            viewModel.UserPaymentTypes = new SelectList(_context.PaymentType.Where(pt => pt.UserId == user.Id), "PaymentTypeId", "Description");
                 
-                return View(viewModel);
+                return View();
 
         }
 
@@ -76,7 +71,7 @@ namespace Bangazon.Controllers
 // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(OrderDetailViewModel model, Order order)
+        public async Task<IActionResult> Create(Order order)
         {
             if (ModelState.IsValid)
             {
@@ -85,16 +80,7 @@ namespace Bangazon.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ApplicationUser user = await GetCurrentUserAsync();
-
-            model.Order = await _context.Order.FindAsync(model.Order.OrderId);
-
-            model.UserPaymentTypes = new SelectList(
-                _context.PaymentType
-                .Where(pt => pt.UserId == user.Id),
-                "PaymentTypeId",
-                "Description");
-            return View(model);
+            return View();
 
         }
 
@@ -106,14 +92,20 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order.FindAsync(id);
-            if (order == null)
+            ApplicationUser user = await GetCurrentUserAsync();
+            var viewModel = new OrderDetailViewModel();
+            viewModel.Order = await _context.Order
+            .Include(o => o.OrderProducts)
+                    .ThenInclude(op => op.Product)
+                .Where(o => o.OrderId == id).SingleOrDefaultAsync();
+            viewModel.UserPaymentTypes = new SelectList(_context.PaymentType.Where(pt => pt.UserId == user.Id), "PaymentTypeId", "Description");
+
+            if (viewModel.Order == null)
             {
                 return NotFound();
             }
-            ViewData["PaymentTypeId"] = new SelectList(_context.PaymentType, "PaymentTypeId", "AccountNumber", order.PaymentTypeId);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", order.UserId);
-            return View(order);
+            
+            return View(viewModel);
         }
 
         // POST: Orders/Edit/5
@@ -121,25 +113,26 @@ namespace Bangazon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, OrderDetailViewModel viewModel)
+        public async Task<IActionResult> Edit(int id, OrderDetailViewModel vm)
         {
-            var order = viewModel.Order;
 
-            if (id != order.OrderId)
-            {
-                return NotFound();
-            }
-
+            ModelState.Remove("Order.User");
+            ModelState.Remove("Order.UserId");
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(order);
+                    ApplicationUser user = await GetCurrentUserAsync();
+
+                    vm.Order.DateCompleted = DateTime.Now;
+                    vm.Order.OrderId = id;
+                    vm.Order.UserId = user.Id;
+                    _context.Update(vm.Order);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderExists(order.OrderId))
+                    if (!OrderExists(vm.Order.OrderId))
                     {
                         return NotFound();
                     }
@@ -151,15 +144,14 @@ namespace Bangazon.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ApplicationUser user = await GetCurrentUserAsync();
-
-            viewModel.UserPaymentTypes = new SelectList(
+            ApplicationUser currentUser = await GetCurrentUserAsync();
+            vm.UserPaymentTypes = new SelectList(
                 _context.PaymentType
-                .Where(pt => pt.UserId == user.Id),
+                .Where(pt => pt.UserId == currentUser.Id),
                 "PaymentTypeId",
                 "Description");
 
-            return View(viewModel);
+            return View(vm);
         }
 
         // GET: Orders/Delete/5
