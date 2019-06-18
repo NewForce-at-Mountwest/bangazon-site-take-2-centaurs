@@ -85,6 +85,7 @@ namespace Bangazon.Controllers
         }
 
         // GET: Orders/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
