@@ -17,7 +17,7 @@ namespace Bangazon.Models
         public DateTime DateCreated {get;set;}
 
         [Required]
-        [StringLength(255)]
+        [StringLength(255, ErrorMessage = "Please enter less than 255 characters")]
         public string Description { get; set; }
 
         [Required]
@@ -28,7 +28,7 @@ namespace Bangazon.Models
         [DisplayFormat(DataFormatString = "{0:C}")]
         public double Price { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter quantity")]
         public int Quantity { get; set; }
 
         [Required]
