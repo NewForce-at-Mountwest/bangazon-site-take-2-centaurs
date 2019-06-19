@@ -29,7 +29,7 @@ namespace Bangazon.Data {
             modelBuilder.Entity<Order> ()
                 .HasMany (o => o.OrderProducts)
                 .WithOne (l => l.Order)
-                .OnDelete (DeleteBehavior.Restrict);
+                .OnDelete (DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Product> ()
                 .Property (b => b.DateCreated)
