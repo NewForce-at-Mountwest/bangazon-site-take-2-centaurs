@@ -9,12 +9,12 @@ namespace Bangazon.Models
     public class Product
     {
         [Key]
-        public int ProductId {get;set;}
+        public int ProductId { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateCreated {get;set;}
+        public DateTime DateCreated { get; set; }
 
         [Required]
         [StringLength(255, ErrorMessage = "Please enter less than 255 characters")]
