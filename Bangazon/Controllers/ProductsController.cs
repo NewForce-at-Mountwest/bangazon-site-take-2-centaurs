@@ -154,7 +154,7 @@ namespace Bangazon.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-           // return View(product);
+            return View(product);
         }
 
         // GET: Products/Edit/5
