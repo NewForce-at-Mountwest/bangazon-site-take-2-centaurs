@@ -31,13 +31,16 @@ namespace Bangazon.Controllers
         [Authorize]
         public async Task<IActionResult> Index(string searchString)
         {
-            var products = from p in _context.Product
-                         select p;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                products = products.Where(s => s.Title.Contains(searchString));
-            }
+  
+                var products = from p in _context.Product
+                               select p;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                products = products.Where(s => s.Title.Contains(searchString) || s.City.Contains(searchString));
+                }
+
 
             ApplicationUser user = await GetCurrentUserAsync();
             var applicationDbContext = _context.Product.Include(p => p.ProductType).Include(p => p.User);
