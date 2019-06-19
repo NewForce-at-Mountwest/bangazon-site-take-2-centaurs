@@ -76,7 +76,7 @@ namespace Bangazon.Controllers
         {
             ProductViewModel productModel = new ProductViewModel();
 
-            SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId");
 
             productModel.productTypes = productTypes;
             return View(productModel);
@@ -103,9 +103,58 @@ namespace Bangazon.Controllers
                 return RedirectToAction("Details", new { id = productModel.product.ProductId });
             }
 
-            SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId");
             productModel.productTypes = ProductTypes;
             return View(productModel);
+        }
+
+        //Add items to your cart--WIP
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddToCart(int id)
+        {
+
+            var currentUser = await GetCurrentUserAsync();
+
+            var product = await _context.Product.FirstOrDefaultAsync(p => p.ProductId == id);
+
+            List<Order> cartList = await _context.Order.Where(o => o.UserId == currentUser.Id).ToListAsync();
+
+            Order order = new Order()
+            {
+                DateCreated = DateTime.Now,
+                UserId = currentUser.Id
+            };
+
+
+            if (cartList.Any(o => o.PaymentTypeId == null))
+            {
+                Order currentOrder = cartList.Where(o => o.PaymentTypeId == null).FirstOrDefault();
+                OrderProduct orderproduct = new OrderProduct()
+                {
+                    ProductId = id,
+                    OrderId = currentOrder.OrderId
+                };
+                orderproduct.OrderId = currentOrder.OrderId;
+                _context.Add(orderproduct);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            else
+            {
+                OrderProduct orderproduct = new OrderProduct()
+                {
+                    ProductId = id,
+                    OrderId = order.OrderId
+                };
+                _context.Add(order);
+                _context.Add(orderproduct);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+           // return View(product);
         }
 
         // GET: Products/Edit/5
@@ -193,7 +242,6 @@ namespace Bangazon.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.ProductId == id);
