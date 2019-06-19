@@ -164,12 +164,17 @@ namespace Bangazon.Controllers
             }
 
             var order = await _context.Order
-                .Include(o => o.PaymentType)
-                .Include(o => o.User)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+            .Include(o => o.OrderProducts)
+                .Where(o => o.OrderId == id).SingleOrDefaultAsync();
+
             if (order == null)
             {
                 return NotFound();
+            }
+
+            if (order.DateCompleted != null)
+            {
+                return RedirectToAction(nameof(OrderError));
             }
 
             return View(order);
@@ -184,6 +189,12 @@ namespace Bangazon.Controllers
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize]
+        public IActionResult OrderError()
+        {
+            return View();
         }
 
         private bool OrderExists(int id)
