@@ -76,7 +76,7 @@ namespace Bangazon.Controllers
         {
             ProductViewModel productModel = new ProductViewModel();
 
-            SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId");
+            SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
 
             productModel.productTypes = productTypes;
             return View(productModel);
@@ -103,14 +103,14 @@ namespace Bangazon.Controllers
                 return RedirectToAction("Details", new { id = productModel.product.ProductId });
             }
 
-            SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId");
+            SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             productModel.productTypes = ProductTypes;
             return View(productModel);
         }
 
         //Add items to your cart--WIP
         [HttpGet]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToCart(int id)
         {
 
@@ -154,6 +154,7 @@ namespace Bangazon.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
+
             return View(product);
         }
 
