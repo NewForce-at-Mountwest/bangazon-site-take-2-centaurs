@@ -37,6 +37,11 @@
                 <input asp-for="product.City" class="form-control" />
                 <span asp-validation-for="product.City" class="text-danger"></span>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="product.localDeliveryAvailable" /> @Html.DisplayNameFor(model => model.product.localDeliveryAvailable)
+                </label>
+            </div>
             <div class="form-group">
                 <label asp-for="product.ImagePath" class="control-label"></label>
                 <input asp-for="product.ImagePath" class="form-control" />
