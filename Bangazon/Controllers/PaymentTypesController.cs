@@ -23,8 +23,8 @@ namespace Bangazon.Controllers
             _userManager = userManager;
         }
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-        
-        
+
+
         // GET: PaymentTypes
         public async Task<IActionResult> Index()
         {
@@ -73,7 +73,7 @@ namespace Bangazon.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentTypeId,DateCreated,Description,AccountNumber,UserId")] PaymentType paymentType)
+        public async Task<IActionResult> Create([Bind("DateCreated,Description,AccountNumber")] PaymentType paymentType)
         {
             ModelState.Remove("UserId");
             ModelState.Remove("User");
@@ -112,7 +112,7 @@ namespace Bangazon.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentTypeId, DateCreated, Description, AccountNumber, UserId")] PaymentType paymentType)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentTypeId,UserId,Description,AccountNumber,UserId")] PaymentType paymentType)
         {
             var currentUser = await GetCurrentUserAsync();
             if (id != paymentType.PaymentTypeId)
@@ -189,7 +189,7 @@ namespace Bangazon.Controllers
             else
             {
                 _context.PaymentType.Remove(paymentType);
-             }
+            }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

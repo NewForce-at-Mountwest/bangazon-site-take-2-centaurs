@@ -34,7 +34,6 @@ namespace Bangazon.Models
     [Required]
     public ApplicationUser User { get; set; }
 
-   [Required]
     public ICollection<Order> Orders { get; set; }
         //public object ApplicationUser { get; internal set; }
     }
