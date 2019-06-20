@@ -10,6 +10,7 @@ using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Bangazon.Models.ProductViewModels;
+using System.Data.SqlClient;
 
 namespace Bangazon.Controllers
 {
@@ -25,6 +26,15 @@ namespace Bangazon.Controllers
         }
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
+        protected string _connectionString;
+
+        protected SqlConnection Connection
+        {
+            get
+            {
+                return new SqlConnection(_connectionString);
+            }
+        }
 
         // GET: Products
 
@@ -32,14 +42,14 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> Index(string searchString)
         {
 
-  
-                var products = from p in _context.Product
-                               select p;
 
-                if (!String.IsNullOrEmpty(searchString))
-                {
+            var products = from p in _context.Product
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
                 products = products.Where(s => s.Title.Contains(searchString) || s.City.Contains(searchString));
-                }
+            }
 
 
             ApplicationUser user = await GetCurrentUserAsync();
@@ -76,14 +86,20 @@ namespace Bangazon.Controllers
         {
             ProductViewModel productModel = new ProductViewModel();
 
-            SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            //SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            //productModel.productTypes = productTypes;
 
-            productModel.productTypes = productTypes;
+            SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            // Add a 0 option to the select list
+            SelectList productTypes0 = ProductTypeDropdown(productTypes);
+
+            productModel.productTypes = productTypes0;
+
             return View(productModel);
         }
 
         // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -94,6 +110,11 @@ namespace Bangazon.Controllers
 
             if (ModelState.IsValid)
             {
+                //if (productModel.productTypes.SelectedValue == null)
+                //{
+                //    ModelState.AddModelError("", "Please select a product type.");
+                //}
+
                 var currentUser = await GetCurrentUserAsync();
 
                 productModel.product.UserId = currentUser.Id;
@@ -103,8 +124,16 @@ namespace Bangazon.Controllers
                 return RedirectToAction("Details", new { id = productModel.product.ProductId });
             }
 
-            SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
-            productModel.productTypes = ProductTypes;
+
+            //SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            //productModel.productTypes = ProductTypes;
+
+            SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            // Add a 0 option to the select list
+            SelectList productTypes0 = ProductTypeDropdown(productTypes);
+
+            productModel.productTypes = productTypes0;
+
             return View(productModel);
         }
 
@@ -177,7 +206,7 @@ namespace Bangazon.Controllers
         }
 
         // POST: Products/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -246,6 +275,26 @@ namespace Bangazon.Controllers
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.ProductId == id);
+        }
+
+        public static SelectList ProductTypeDropdown(SelectList selectList)
+        {
+
+            SelectListItem firstItem = new SelectListItem()
+            {
+                Text = "Select a Product Type"
+            };
+            List<SelectListItem> newList = selectList.ToList();
+            newList.Insert(0, firstItem);
+
+            var selectedItem = newList.FirstOrDefault(item => item.Selected);
+            var selectedItemValue = String.Empty;
+            if (selectedItem != null)
+            {
+                selectedItemValue = selectedItem.Value;
+            }
+
+            return new SelectList(newList, "Value", "Text", selectedItemValue);
         }
     }
 }
