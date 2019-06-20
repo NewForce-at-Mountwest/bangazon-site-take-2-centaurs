@@ -12,7 +12,7 @@ namespace Bangazon.Models.ProductViewModels
         public Product product { get; set; }
 
         
-        [Required(ErrorMessage = "You must select a product type.")]
+        
         public SelectList productTypes { get; set; }
     }
 

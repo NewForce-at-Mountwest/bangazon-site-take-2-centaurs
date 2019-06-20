@@ -113,7 +113,7 @@ namespace Bangazon.Controllers
 
             if (ModelState.IsValid)
             {
-                if (productModel.productTypes == null)
+                if (productModel.productTypes.SelectedValue == null)
                 {
                     ModelState.AddModelError("", "Please select a product type.");   
                 }
