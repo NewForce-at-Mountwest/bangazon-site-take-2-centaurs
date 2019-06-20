@@ -31,6 +31,9 @@
                 @Html.DisplayNameFor(model => model.City)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.localDeliveryAvailable)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ImagePath)
             </th>
             <th>
@@ -67,6 +70,9 @@
                 @Html.DisplayFor(modelItem => item.City)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.localDeliveryAvailable)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.ImagePath)
             </td>
             <td>
@@ -79,9 +85,9 @@
                 @Html.DisplayFor(modelItem => item.ProductType.Label)
             </td>
             <td>
-                
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> 
-               
+
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a>
+
             </td>
         </tr>
 }

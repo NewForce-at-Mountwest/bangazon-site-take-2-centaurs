@@ -49,6 +49,8 @@ namespace Bangazon.Models
 
 
         public ProductType ProductType { get; set; }
+        [Display(Name="Local Delivery Available?")]
+        public bool localDeliveryAvailable { get; set; }
 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
 
