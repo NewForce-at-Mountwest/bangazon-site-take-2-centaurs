@@ -4,14 +4,16 @@ using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190620161604_Inactive")]
+    partial class Inactive
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,8 +252,6 @@ namespace Bangazon.Migrations
                     b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<bool>("localDeliveryAvailable");
-
                     b.HasKey("ProductId");
 
                     b.HasIndex("ProductTypeId");
@@ -271,8 +271,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 1,
                             Quantity = 100,
                             Title = "Kite",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -284,8 +283,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 2,
                             Quantity = 5,
                             Title = "Wheelbarrow",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -297,8 +295,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 18,
                             Title = "Saw",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -310,8 +307,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 12,
                             Title = "Electric Drill",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -323,8 +319,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 32,
                             Title = "Hammer",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         });
                 });
 
