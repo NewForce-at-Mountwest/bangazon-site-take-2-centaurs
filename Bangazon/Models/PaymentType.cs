@@ -17,8 +17,8 @@ namespace Bangazon.Models
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
 
-    [Display(Name = "Active?")]
-    public bool IsActive { get; set; }
+    [Display(Name = "Inactive?")]
+    public bool Inactive { get; set; }
 
     [Required]
     [StringLength(55, ErrorMessage = "Please enter less than 55 characters")]
@@ -34,6 +34,7 @@ namespace Bangazon.Models
     [Required]
     public ApplicationUser User { get; set; }
 
+   [Required]
     public ICollection<Order> Orders { get; set; }
         //public object ApplicationUser { get; internal set; }
     }

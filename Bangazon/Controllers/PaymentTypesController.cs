@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
@@ -29,13 +29,16 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = await GetCurrentUserAsync();
-            var applicationDbContext = _context.PaymentType.Include(pt => pt.User)
-                .Where(pt => pt.UserId == currentUser.Id);
+            var applicationDbContext = _context.PaymentType
+                .Include(pt => pt.User)
+                .Where(pt => pt.UserId == currentUser.Id)
+                .Where(p => p.Inactive == false);
             return View(await applicationDbContext.ToListAsync());
         }
 
 
         // GET: PaymentTypes/Details/
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,8 +58,9 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
-        
+
         // GET: PaymentTypes/Create
+        [Authorize]
         public IActionResult Create()
         {
 
@@ -64,11 +68,12 @@ namespace Bangazon.Controllers
             return View();
         }
 
-        
+
         // POST: PaymentTypes/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DateCreated,Description,AccountNumber")] PaymentType paymentType)
+        public async Task<IActionResult> Create([Bind("PaymentTypeId,DateCreated,Description,AccountNumber,UserId")] PaymentType paymentType)
         {
             ModelState.Remove("UserId");
             ModelState.Remove("User");
@@ -84,8 +89,9 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
-        
+
         // GET: PaymentTypes/Edit/
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -103,9 +109,10 @@ namespace Bangazon.Controllers
         }
 
         // POST: PaymentTypes/Edit/
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentTypeId, UserId, Description, AccountNumber")] PaymentType paymentType)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentTypeId, DateCreated, Description, AccountNumber, UserId")] PaymentType paymentType)
         {
             var currentUser = await GetCurrentUserAsync();
             if (id != paymentType.PaymentTypeId)
@@ -144,6 +151,7 @@ namespace Bangazon.Controllers
 
 
         // GET: PaymentTypes/Delete/
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -165,12 +173,23 @@ namespace Bangazon.Controllers
 
 
         // POST: PaymentTypes/Delete/
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var paymentType = await _context.PaymentType.FindAsync(id);
-            _context.PaymentType.Remove(paymentType);
+            var orderHistory = (_context.Order
+                .Include(o => o.PaymentTypeId)
+                .Where(o => o.PaymentTypeId == id)).Count();
+            if (orderHistory > 0)
+            {
+                paymentType.Inactive = true;
+            }
+            else
+            {
+                _context.PaymentType.Remove(paymentType);
+             }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
