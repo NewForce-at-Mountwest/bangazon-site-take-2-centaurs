@@ -113,6 +113,11 @@ namespace Bangazon.Controllers
 
             if (ModelState.IsValid)
             {
+                if (productModel.productTypes == null)
+                {
+                    ModelState.AddModelError("", "Please select a product type.");   
+                }
+
                 var currentUser = await GetCurrentUserAsync();
 
                 productModel.product.UserId = currentUser.Id;
@@ -121,6 +126,7 @@ namespace Bangazon.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", new { id = productModel.product.ProductId });
             }
+
 
             //SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             //productModel.productTypes = ProductTypes;
