@@ -1,38 +1,44 @@
-﻿@model Bangazon.Models.PaymentTypeViewModels.PaymentTypeListViewModel
+﻿@model IEnumerable<Bangazon.Models.PaymentType>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>My Payment Types</h2>
+<h1>Profile</h1>
+
+<h5><b>Payment Options</b></h5>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add a Payment Option</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentTypes[0].Description)
+                @Html.DisplayNameFor(model => model.DateCreated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentTypes[0].AccountNumber)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.PaymentTypes)
+        @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AccountNumber)
                 </td>
-
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.PaymentTypeId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.PaymentTypeId">Details</a> |

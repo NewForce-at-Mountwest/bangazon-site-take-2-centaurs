@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,7 +20,7 @@ namespace Bangazon.Models
     [Display(Name = "Active?")]
     public bool IsActive { get; set; }
 
-        [Required]
+    [Required]
     [StringLength(55, ErrorMessage = "Please enter less than 55 characters")]
     public string Description { get; set; }
 

@@ -6,6 +6,17 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20190617134122_BangazonTables.cs" />
+    <Compile Remove="Migrations\20190617134122_BangazonTables.Designer.cs" />
+    <Compile Remove="Migrations\20190618134940_paymenttypes.cs" />
+    <Compile Remove="Migrations\20190618134940_paymenttypes.Designer.cs" />
+    <Compile Remove="Migrations\20190618150834_test.cs" />
+    <Compile Remove="Migrations\20190618150834_test.Designer.cs" />
+    <Compile Remove="Migrations\20190618153836_test2.cs" />
+    <Compile Remove="Migrations\20190618153836_test2.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -20,9 +31,5 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.1.0-preview1-final" />
   </ItemGroup>
-<<<<<<< HEAD
-
-=======
   
->>>>>>> master
 </Project>
