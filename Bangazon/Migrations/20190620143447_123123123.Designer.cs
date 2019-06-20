@@ -4,14 +4,16 @@ using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190620143447_123123123")]
+    partial class _123123123
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace Bangazon.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "95614617-ebe7-42c1-a2d7-bfefc928c102",
+                            ConcurrencyStamp = "8a8758ab-111a-4a75-9b9a-3e1b0dc8cc43",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admina",
@@ -91,7 +93,7 @@ namespace Bangazon.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMd1aKZOexC5HF+4qT6hIXFx465XNRiZYvmocf/NdOu/KgdGpSzkBtvxRFahGJqXBA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEqjTeUot4eddkUqIT8DuVoxG7JUG1E5Xo0CLDYzUGnSlldumIfyzsTCupHk3LgHpQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -185,7 +187,7 @@ namespace Bangazon.Migrations
                         .IsRequired()
                         .HasMaxLength(55);
 
-                    b.Property<bool>("Inactive");
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("UserId")
                         .IsRequired();
@@ -203,7 +205,7 @@ namespace Bangazon.Migrations
                             AccountNumber = "86753095551212",
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "American Express",
-                            Inactive = false,
+                            IsActive = false,
                             UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
@@ -212,7 +214,7 @@ namespace Bangazon.Migrations
                             AccountNumber = "4102948572991",
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Discover",
-                            Inactive = false,
+                            IsActive = false,
                             UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         });
                 });
@@ -250,8 +252,6 @@ namespace Bangazon.Migrations
                     b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<bool>("localDeliveryAvailable");
-
                     b.HasKey("ProductId");
 
                     b.HasIndex("ProductTypeId");
@@ -271,8 +271,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 1,
                             Quantity = 100,
                             Title = "Kite",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -284,8 +283,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 2,
                             Quantity = 5,
                             Title = "Wheelbarrow",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -297,8 +295,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 18,
                             Title = "Saw",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -310,8 +307,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 12,
                             Title = "Electric Drill",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -323,8 +319,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 32,
                             Title = "Hammer",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         });
                 });
 
