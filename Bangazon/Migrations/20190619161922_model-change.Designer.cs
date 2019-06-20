@@ -4,14 +4,16 @@ using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190619161922_model-change")]
+    partial class modelchange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace Bangazon.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cfb841c1-87bc-440c-9012-60eccd02b710",
+                            ConcurrencyStamp = "4af1b7f9-f6a9-42fd-a561-b598c9e92321",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admina",
@@ -91,7 +93,7 @@ namespace Bangazon.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOAsk/pAzBvQ0CaT6/vKUwTxRbVOLWwXV0zeKMml82K3Lx2+3F+YRGgPEx3TDM1LZg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAWN9N4Fo3Ek3He3vmmQSZmwfSlLGMFj0Fg0WzsSuzOcONMVRiQKny21HEGwuH7gCw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -185,8 +187,6 @@ namespace Bangazon.Migrations
                         .IsRequired()
                         .HasMaxLength(55);
 
-                    b.Property<bool>("IsActive");
-
                     b.Property<string>("UserId")
                         .IsRequired();
 
@@ -203,7 +203,6 @@ namespace Bangazon.Migrations
                             AccountNumber = "86753095551212",
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "American Express",
-                            IsActive = false,
                             UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
@@ -212,7 +211,6 @@ namespace Bangazon.Migrations
                             AccountNumber = "4102948572991",
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Discover",
-                            IsActive = false,
                             UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         });
                 });
@@ -519,7 +517,7 @@ namespace Bangazon.Migrations
                     b.HasOne("Bangazon.Models.Order", "Order")
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Bangazon.Models.Product", "Product")
                         .WithMany("OrderProducts")
