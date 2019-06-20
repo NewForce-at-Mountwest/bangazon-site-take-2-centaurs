@@ -4,14 +4,16 @@ using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190620170915_payment-type-model-update")]
+    partial class paymenttypemodelupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace Bangazon.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f64501bd-5c99-45c6-8b20-233ae2cd2cba",
+                            ConcurrencyStamp = "63732221-0b4b-46ce-b74c-5400fb086b5a",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admina",
@@ -91,7 +93,7 @@ namespace Bangazon.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENtTnxfDq742HdjyHUxlkOpKWRWSNzTGEka+A9rbrFxZE+FXql3bi8TGlXq7klOncA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGciFU92ZZhfsQ3yMEjAkIYl9aQcmrQ18+A+dWyjsBsnayQCmGa48DErrO6pe8INjg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -250,8 +252,6 @@ namespace Bangazon.Migrations
                     b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<bool>("localDeliveryAvailable");
-
                     b.HasKey("ProductId");
 
                     b.HasIndex("ProductTypeId");
@@ -271,8 +271,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 1,
                             Quantity = 100,
                             Title = "Kite",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -284,8 +283,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 2,
                             Quantity = 5,
                             Title = "Wheelbarrow",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -297,8 +295,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 18,
                             Title = "Saw",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -310,8 +307,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 12,
                             Title = "Electric Drill",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         },
                         new
                         {
@@ -323,8 +319,7 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 32,
                             Title = "Hammer",
-                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            localDeliveryAvailable = false
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         });
                 });
 
