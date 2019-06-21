@@ -11,8 +11,11 @@ namespace Bangazon.Models.ProductViewModels
     public class ProductViewModel
     {
         public Product product { get; set; }
+
         public SelectList productTypes { get; set; }
-        //public IFormFile ProductImage { get; set; }
+
+        public IFormFile ProductImage { get; set; }
+
     }
 
 }

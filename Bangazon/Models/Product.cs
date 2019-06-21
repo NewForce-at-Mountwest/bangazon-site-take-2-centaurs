@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 
 
+
 namespace Bangazon.Models
 {
     public class Product
@@ -39,9 +40,7 @@ namespace Bangazon.Models
 
         public string City {get; set;}
 
-        //public string ImagePath {get; set;}
-        //[Display(Name = "Product Image")]
-        //public byte[] ProductImage { get; set; }
+        public byte[] ProductImage  {get; set;}
 
         public bool Active { get; set; }
 
@@ -52,7 +51,6 @@ namespace Bangazon.Models
         [Display(Name="Product Category")]
         public int ProductTypeId { get; set; }
 
-        
         public ProductType ProductType { get; set; }
         [Display(Name="Local Delivery Available?")]
         public bool localDeliveryAvailable { get; set; }

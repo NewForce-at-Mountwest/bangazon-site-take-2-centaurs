@@ -33,8 +33,6 @@
                 <input asp-for="product.Quantity" class="form-control" />
                 <span asp-validation-for="product.Quantity" class="text-danger"></span>
             </div>
-
-
             <div class="form-group">
                 <label asp-for="product.City" class="control-label"></label>
                 <input asp-for="product.City" class="form-control" />
@@ -44,6 +42,10 @@
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="product.localDeliveryAvailable" /> @Html.DisplayNameFor(model => model.product.localDeliveryAvailable)
                 </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.ProductImage" class="control-label">Upload A Product Image</label>
+                <input type="file" name="ProductImage" asp-for="product.ProductImage" accept=".png, .jpg, .tif, .jpeg, .gif" />
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -56,10 +58,6 @@
                 <span asp-validation-for="product.ProductTypeId" class="text-danger"></span>
 
             </div>
-            @*<div class="form-group">
-                <label class="control-label">Upload Product Image:</label>
-                <input type="file" name="ProductImage" asp-for="ProductImage">
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

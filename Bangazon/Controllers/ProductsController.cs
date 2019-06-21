@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -46,15 +45,13 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> Index(string searchString)
         {
 
-
-            var products = from p in _context.Product
+            var products = from p in _context.Product.Include(p => p.ProductType).Include(p => p.User)
                            select p;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 products = products.Where(s => s.Title.Contains(searchString) || s.City.Contains(searchString));
             }
-
 
             ApplicationUser user = await GetCurrentUserAsync();
             var applicationDbContext = _context.Product.Include(p => p.ProductType).Include(p => p.User);
@@ -91,9 +88,6 @@ namespace Bangazon.Controllers
 
             ProductViewModel productModel = new ProductViewModel();
 
-            //SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
-            //productModel.productTypes = productTypes;
-
             SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             // Add a 0 option to the select list
             SelectList productTypes0 = ProductTypeDropdown(productTypes);
@@ -101,8 +95,6 @@ namespace Bangazon.Controllers
             productModel.productTypes = productTypes0;
 
             return View(productModel);
-
-
         }
 
         // POST: Products/Create
@@ -117,10 +109,12 @@ namespace Bangazon.Controllers
 
             if (ModelState.IsValid)
             {
-                //if (productModel.productTypes.SelectedValue == null)
-                //{
-                //    ModelState.AddModelError("", "Please select a product type.");   
-                //}
+                using (var memoryStream = new MemoryStream())
+                {
+                    await productModel.ProductImage.CopyToAsync(memoryStream);
+                    productModel.product.ProductImage = memoryStream.ToArray();
+                }
+
 
                 var currentUser = await GetCurrentUserAsync();
 
@@ -137,8 +131,6 @@ namespace Bangazon.Controllers
                 return RedirectToAction("Details", new { id = productModel.product.ProductId });
             }
 
-            //SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
-            //productModel.productTypes = ProductTypes;
 
             SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             // Add a 0 option to the select list
@@ -184,6 +176,7 @@ namespace Bangazon.Controllers
             {
                 try
                 {
+
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
