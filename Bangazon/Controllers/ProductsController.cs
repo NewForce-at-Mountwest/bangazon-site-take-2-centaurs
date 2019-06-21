@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Bangazon.Models.ProductViewModels;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace Bangazon.Controllers
 {
@@ -113,10 +114,12 @@ namespace Bangazon.Controllers
 
             if (ModelState.IsValid)
             {
-                //if (productModel.productTypes.SelectedValue == null)
-                //{
-                //    ModelState.AddModelError("", "Please select a product type.");   
-                //}
+                using (var memoryStream = new MemoryStream())
+                {
+                    await productModel.ProductImage.CopyToAsync(memoryStream);
+                    productModel.product.ProductImage = memoryStream.ToArray();
+                }
+
 
                 var currentUser = await GetCurrentUserAsync();
 
@@ -127,9 +130,6 @@ namespace Bangazon.Controllers
                 return RedirectToAction("Details", new { id = productModel.product.ProductId });
             }
 
-
-            //SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
-            //productModel.productTypes = ProductTypes;
 
             SelectList productTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             // Add a 0 option to the select list

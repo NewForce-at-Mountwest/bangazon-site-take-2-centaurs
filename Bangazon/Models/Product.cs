@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace Bangazon.Models
 {
     public class Product
@@ -36,7 +37,7 @@ namespace Bangazon.Models
 
         public string City {get; set;}
 
-        public string ImagePath {get; set;}
+        public byte[] ProductImage  {get; set;}
 
         public bool Active { get; set; }
 

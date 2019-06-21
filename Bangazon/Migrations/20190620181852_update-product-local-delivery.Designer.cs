@@ -4,14 +4,16 @@ using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190620181852_update-product-local-delivery")]
+    partial class updateproductlocaldelivery
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace Bangazon.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "64adecf3-c60e-4694-a55e-a458d2fcb265",
+                            ConcurrencyStamp = "0efd94e2-cf0c-4a2e-9a44-4958915955f0",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admina",
@@ -91,7 +93,7 @@ namespace Bangazon.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPxsVzplaJ0pX8Amt9kkb+h6+cIWlR7znYkttIEKNcASz9l/E1ss0sIkRHUmV165Jg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFQeaIfPRMV2g5LFQZZlAd7WbReIk8YFbi7x2z1RqgjgkDWvP79flgLTajXcwqkT/w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -235,9 +237,9 @@ namespace Bangazon.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.Property<double>("Price");
+                    b.Property<string>("ImagePath");
 
-                    b.Property<byte[]>("ProductImage");
+                    b.Property<double>("Price");
 
                     b.Property<int>("ProductTypeId");
 
