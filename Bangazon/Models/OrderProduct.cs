@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
+
 namespace Bangazon.Models {
     public class OrderProduct {
         [Key]

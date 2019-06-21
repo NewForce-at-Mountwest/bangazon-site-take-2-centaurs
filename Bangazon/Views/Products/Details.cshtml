@@ -10,7 +10,7 @@
     <h4>Product</h4>
     @if (Model.ProductImage != null)
     {
-    <img src="data:image;base64,@System.Convert.ToBase64String(Model.ProductImage)" width="80" height="80" />
+        <img src="data:image;base64,@System.Convert.ToBase64String(Model.ProductImage)" width="80" height="80" />
     }
     <hr />
     <dl class="row">
@@ -56,12 +56,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.localDeliveryAvailable)
         </dd>
-        @*<dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ProductImage)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ProductImage)
-            </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductImage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductImage)
+        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Active)
         </dt>
@@ -83,6 +83,6 @@
     </dl>
 </div>
 <div>
-    
+
     <a asp-action="Index">Back to List</a>
 </div>
