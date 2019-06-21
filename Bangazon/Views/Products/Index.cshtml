@@ -33,9 +33,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.localDeliveryAvailable)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.ProductImage)
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Active)
             </th>
@@ -72,9 +72,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.localDeliveryAvailable)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
-            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ProductImage)
+                @if (item.ProductImage != null)
+                {
+
+                    var base64 = Convert.ToBase64String(item.ProductImage);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                    <img class="userImg" style="width:50px" src="@imgSrc" />
+                }
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Active)
             </td>

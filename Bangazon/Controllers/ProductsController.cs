@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using Bangazon.Models.ProductViewModels;
-using System.Data.SqlClient;
+
 
 namespace Bangazon.Controllers
 {
@@ -36,8 +40,8 @@ namespace Bangazon.Controllers
             }
         }
 
-        // GET: Products
 
+        // GET: Products
         [Authorize]
         public async Task<IActionResult> Index(string searchString)
         {
@@ -56,6 +60,7 @@ namespace Bangazon.Controllers
             var applicationDbContext = _context.Product.Include(p => p.ProductType).Include(p => p.User);
             return View(await products.ToListAsync());
         }
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -78,9 +83,8 @@ namespace Bangazon.Controllers
             return View(product);
         }
 
+
         // GET: Products/Create
-
-
         [Authorize]
         public IActionResult Create()
         {
@@ -122,11 +126,16 @@ namespace Bangazon.Controllers
 
                 productModel.product.UserId = currentUser.Id;
 
+                //using (var memoryStream = new MemoryStream())
+                //{
+                //    await productModel.ProductImage.CopyToAsync(memoryStream);
+                //    productModel.product.ProductImage = memoryStream.ToArray();
+                //}
+
                 _context.Add(productModel.product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", new { id = productModel.product.ProductId });
             }
-
 
             //SelectList ProductTypes = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             //productModel.productTypes = ProductTypes;
@@ -163,7 +172,8 @@ namespace Bangazon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,DateCreated,Description,Title,Price,Quantity,UserId,City,ImagePath,Active,localDeliveryAvailable,ProductTypeId")] Product product)
+        //Removed "ProductImage" from Selection Below:
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,DateCreated,Description,Title,Price,Quantity,UserId,City,Active,localDeliveryAvailable,ProductTypeId")] Product product)
         {
             if (id != product.ProductId)
             {

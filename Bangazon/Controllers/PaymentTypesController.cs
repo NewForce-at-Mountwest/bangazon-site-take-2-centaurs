@@ -10,6 +10,7 @@ using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace Bangazon.Controllers
 {
     public class PaymentTypesController : Controller

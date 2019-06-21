@@ -4,14 +4,16 @@ using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190620184440_producttypes")]
+    partial class producttypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace Bangazon.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "36e8b214-8a92-40d3-bc04-36130cd796f9",
+                            ConcurrencyStamp = "5480d6f4-85f3-4ee6-b963-857de6aaf724",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admina",
@@ -91,7 +93,7 @@ namespace Bangazon.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPmwP4si/rcW/BpJSlrV2ke1l0IzuzSOMdWUM8BGS/hPYJGTYcY9ZFfMsIPQt+R/wQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFgDoq46vdFSvVQDBI5xXVm0uoIovrXrCmPgiFZkoUhLijIXEBtC+LXN8iu+LXeVbg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -235,9 +237,9 @@ namespace Bangazon.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.Property<double>("Price");
+                    b.Property<string>("ImagePath");
 
-                    b.Property<byte[]>("ProductImage");
+                    b.Property<double>("Price");
 
                     b.Property<int>("ProductTypeId");
 

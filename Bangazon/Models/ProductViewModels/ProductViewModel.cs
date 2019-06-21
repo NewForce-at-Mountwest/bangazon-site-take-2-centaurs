@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,9 +11,8 @@ namespace Bangazon.Models.ProductViewModels
     public class ProductViewModel
     {
         public Product product { get; set; }
-
-
-                public SelectList productTypes { get; set; }
+        public SelectList productTypes { get; set; }
+        //public IFormFile ProductImage { get; set; }
     }
 
 }
