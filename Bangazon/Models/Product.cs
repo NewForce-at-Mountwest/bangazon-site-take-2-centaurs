@@ -48,7 +48,6 @@ namespace Bangazon.Models
         [Display(Name="Product Category")]
         public int ProductTypeId { get; set; }
 
-        
         public ProductType ProductType { get; set; }
         [Display(Name="Local Delivery Available?")]
         public bool localDeliveryAvailable { get; set; }

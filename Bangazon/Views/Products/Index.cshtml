@@ -34,9 +34,6 @@
                 @Html.DisplayNameFor(model => model.localDeliveryAvailable)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductImage)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Active)
             </th>
             <th>
@@ -73,13 +70,10 @@
                 @Html.DisplayFor(modelItem => item.localDeliveryAvailable)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductImage)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Active)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.User.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductType.Label)
@@ -89,6 +83,12 @@
                 <a asp-action="Details" asp-route-id="@item.ProductId">Details</a>
 
             </td>
+            @if (item.ProductImage != null)
+            {
+                <td>
+                    <img src="data:image;base64,@System.Convert.ToBase64String(item.ProductImage)" width="80" height="80" />
+
+                </td>}
         </tr>
 }
     </tbody>
